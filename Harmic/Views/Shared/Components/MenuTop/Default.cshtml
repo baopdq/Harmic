@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Harmic.Models.TbMenu>
+@foreach (var item in Model.Where(i => i.Levels == 1))
+{
+    <li class="nav-item">
+        <a class="nav-link" href="@item.Alias">
+            @item.Title
+        </a>
+    </li>
+}

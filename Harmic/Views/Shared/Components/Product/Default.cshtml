@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Harmic.Models.TbProduct>
+@foreach(var item in Model)
+{
+    string sUrl = $"/product/{item.Alias}-{item.ProductId}.html";
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="product-item">
+            <div class="product-img img-zoom-effect">
+                <a href="@sUrl">
+                    <img class="img-full" src="~/assets/images/product/@item.Image" alt="Product Images">
+                </a>
+                <div class="product-add-action">
+                    <ul>
+                        <li>
+                            <a asp-controller="Cart"
+                               asp-action="AddToCart"
+                               asp-route-id="@item.ProductId"
+                               asp-route-quantity="1">
+                                <i class="pe-7s-cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="compare.html">
+                                <i class="pe-7s-shuffle"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="wishlist.html">
+                                <i class="pe-7s-like"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="product-content">
+                <a class="product-name" href="@sUrl">@item.Title</a>
+                <div class="price-box pb-1">
+                    @if (item.PriceSale != null)
+                    {
+                        <span class="new-price text-danger">$@item.PriceSale</span>
+                        <span class="old-price text-primary">$@item.Price</span>
+                    }
+                    else
+                    {
+                        <span class="new-price text-danger">$@item.Price</span>
+                    }
+                </div>
+                <div class="rating-box">
+                    <ul>
+                        <li><i class="pe-7s-star"></i></li>
+                        <li><i class="pe-7s-star"></i></li>
+                        <li><i class="pe-7s-star"></i></li>
+                        <li><i class="pe-7s-star"></i></li>
+                        <li><i class="pe-7s-star"></i></li>   
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}

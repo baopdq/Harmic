@@ -1,0 +1,63 @@
+﻿@page "/order.html"
+@model Harmic.Pages.OrderModel
+@{
+    ViewData["Title"] = "Đơn hàng";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Thanh toán</h2>
+
+    @if (Model.Items == null || !Model.Items.Any())
+    {
+        <div class="alert alert-info">Không có sản phẩm trong giỏ hàng. <a href="/cart.html">Quay lại giỏ hàng</a></div>
+    }
+    else if (Model.Confirmation != null)
+    {
+        <div class="alert alert-success">
+            <h4>Đặt hàng thành công</h4>
+            <p>Mã đơn hàng: <strong>@Model.Confirmation.OrderId</strong></p>
+            <p>Tổng: <strong>@Model.Confirmation.Total.ToString("C")</strong></p>
+            <a href="/">Quay về trang chủ</a>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input asp-for="Input.Name" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Số điện thoại</label>
+                        <input asp-for="Input.Phone" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Địa chỉ</label>
+                        <textarea asp-for="Input.Address" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Xác nhận đặt hàng</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h5>Tóm tắt đơn hàng</h5>
+                <ul class="list-group mb-3">
+                    @foreach (var it in Model.Items)
+                    {
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div>
+                                <strong>@it.Title</strong> <div class="small">x @it.Quantity</div>
+                            </div>
+                            <span>@(it.Price * it.Quantity).ToString("C")</span>
+                        </li>
+                    }
+                    <li class="list-group-item d-flex justify-content-between">
+                        <strong>Tổng</strong>
+                        <strong>@Model.Total.ToString("C")</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+</div>

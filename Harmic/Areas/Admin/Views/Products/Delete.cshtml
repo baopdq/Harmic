@@ -1,0 +1,108 @@
+﻿@model Harmic.Models.TbProduct
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <h1>Xóa sản phẩm</h1>
+                </div>
+                <div class="col-sm-12">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">General Form</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Xóa sản phẩm</h3>
+                        </div>
+                        <!-- /.card-header -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label">Tiêu đề: </label>
+                                @Html.DisplayFor(model => model.Title)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Alias" class="control-label">Alias: </label>
+                                @Html.DisplayFor(model => model.Alias)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label">Mô tả: </label>
+                                @Html.DisplayFor(model => model.Description)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Detail" class="control-label">Chi tiết: </label>
+                                @Html.DisplayFor(model => model.Detail)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Image" class="control-label">Hình ảnh: </label>
+                            <img src="~/files/@Html.DisplayFor(modelItem => modelItem.Image)" width="50" height="50" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label">Giá: </label>
+                                @Html.DisplayFor(model => model.Price)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PriceSale" class="control-label">Giá khuyến mãi: </label>
+                                @Html.DisplayFor(model => model.PriceSale)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Quantity" class="control-label">Số lượng: </label>
+                                @Html.DisplayFor(model => model.Quantity)
+                            </div>
+                            
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="IsNew" /> @Html.DisplayNameFor(model => model.IsNew)
+                                </label>
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="IsBestSeller" /> @Html.DisplayNameFor(model => model.IsBestSeller)
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="UnitInStock" class="control-label">Số lượng trong kho: </label>
+                                @Html.DisplayFor(model => model.UnitInStock)
+                            </div>
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Star" class="control-label">Sao</label>
+                                @Html.DisplayFor(model => model.Star)
+                            </div>
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="ProductId" />
+                            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                            <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>

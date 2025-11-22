@@ -1,0 +1,138 @@
+﻿@model Harmic.Models.TbAccount
+@using Harmic.Ultilities
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Registration Page</title>
+    <link href="~/admin/plugins/bootstrap/js/bootstrap.min.js" rel="stylesheet" />
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/admin/dist/css/adminlte.min.css">
+    <style type="text/css">
+        .form-control{
+            border: 1px solid blue;
+        }
+        .error{
+                        color: red;
+                        display
+        }
+        </style>
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Register a new membership</p>
+                <form id="validate" class="needs-validation" asp-controller="Register" asp-action="Index">
+                    <div class="input-group mb-3" style="border-right:1px;">
+                        <input type="text" asp-for="FullName" class="form-control"
+                               placeholder="Full name" required style="display: block; width: 100%;">
+                        <div class="invalid-feedback">Please enter full name</div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="Username" asp-for="Username" class="form-control display"
+                               placeholder="Username" required style="display:block;width:100%;">
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" id="Password" name="Password" asp-for="Password" class="form-control display"
+                               placeholder="Password" required style="display:block; width:100%;">
+                        <div class="invalid-feedback">Please enter password</div>
+                    </div>
+                    <div class="input-group mb-3" style="border-right:1px;">
+                        <input type="password" id="Confirm Password" name="Confirm Password" class="form-control"
+                               placeholder="Retype password" required style="display:block; width: 100%;">
+                        <div class="invalid-feedback">Retype password does not match</div>
+                    </div>
+                    <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                    <div style="color: red">@Function._Message</div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                                <label for="agreeTerms">
+                                    I agree to the <a href="#">terms</a>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Sign up using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Sign up using Google+
+                    </a>
+                </div>
+
+                <a href="login.html" class="text-center">I already have a membership</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <!-- jQuery -->
+    <script src="~/admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/admin/dist/js/adminlte.min.js"></script>
+    <script type="text/javascript" src=" https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src=" https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/additional-methods.min.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#validate").validate({
+            rules: {
+                Username: {
+                    required: true,
+                    minlength: 5
+                },
+                Password: {
+                    required: true,
+                    minlength: 5
+                },
+                Confirm Password: {
+                    required: true,
+                    equalTo: "#Password"
+                }
+            },
+            messages: {
+                FullName: "Please enter your full name",
+                Username:  "Please enter a username"
+                Password:  "Please provide a password",  
+                "Confirm Password": {
+                    required: "Please retype your password",
+                    equalTo: "Retype password does not match"
+                }
+            },
+        });
+        });
+
+</script>

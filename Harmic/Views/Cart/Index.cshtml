@@ -1,0 +1,184 @@
+﻿@using System.Linq
+@model List<Harmic.Models.CartItem>
+
+@{
+    var subtotal = Model.Sum(x => x.Price * x.Quantity);
+}
+<script>
+    $(".cart-plus-minus-box").on("change", function () {
+        $(this).closest("form").submit();
+    });
+</script>
+
+<main class="main-content">
+    <div class="breadcrumb-area breadcrumb-height" data-bg-image="assets/images/breadcrumb/bg/1-1-1920x373.jpg">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-item">
+                        <h2 class="breadcrumb-heading">Product Related</h2>
+                        <ul>
+                            <li>
+                                <a asp-controller="Home" asp-action="Index">Home <i class="pe-7s-angle-right"></i></a>
+                            </li>
+                            <li>Giỏ hàng</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="container section-space-y-axis-100">
+            <div class="alert alert-info">
+                Giỏ hàng của bạn đang trống.
+            </div>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                Tiếp tục mua sắm
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="cart-area section-space-y-axis-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <form action="javascript:void(0)">
+                            <div class="table-content table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="product_remove">remove</th>
+                                            <th class="product-thumbnail">Ảnh</th>
+                                            <th class="cart-product-name">Tên sản phẩm</th>
+                                            <th class="product-price">Giá bán</th>
+                                            <th class="product-quantity">Số lượng</th>
+                                            <th class="product-subtotal">Tổng tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="product_remove">
+                                                    <a asp-controller="Cart"
+                                                       asp-action="RemoveFromCart"
+                                                       asp-route-productId="@item.ProductId"
+                                                       class="btn btn-sm btn-danger"
+                                                       onclick="return confirm('Xoá sản phẩm này khỏi giỏ?');">
+                                                        Xoá
+                                                    </a>
+                                                </td>
+                                                <td class="product-thumbnail">
+                                                    <a href="javascript:void(0)">
+                                                        <img src="~/files/@item.Image" alt="Cart Thumbnail" width="50" height="50">
+                                                    </a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <a href="javascript:void(0)">@item.ProductName</a>
+                                                </td>
+                                                <td class="product-price">
+                                                    <span class="amount">@item.Price.ToString("N0")</span>
+                                                </td>
+                                                <td class="product-quantity">
+                                                    <form asp-controller="Cart"
+                                                          asp-action="UpdateCart"
+                                                          method="post"
+                                                          class="cart-update-form">
+
+                                                        <input type="hidden" name="productId" value="@item.ProductId" />
+
+                                                        <div class="cart-qty-wrapper">
+                                                            <div class="cart-plus-minus">
+                                                                <input class="cart-plus-minus-box"
+                                                                       type="number"
+                                                                       name="quantity"
+                                                                       value="@item.Quantity"
+                                                                       min="1" />
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-sm btn-primary cart-update-btn">
+                                                                Cập nhật
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </td>
+
+
+                                                <td class="product-subtotal">
+                                                    <span class="amount">
+                                                        @((item.Price * item.Quantity).ToString("N0")) ₫
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5 ml-auto">
+                                    <div class="cart-page-total">
+                                        <h2>Cart totals</h2>
+                                        <ul>
+                                            <li>
+                                                Subtotal
+                                                <span>@subtotal.ToString("N0") ₫</span>
+                                            </li>
+                                            <li>
+                                                Total
+                                                <span>@subtotal.ToString("N0") ₫</span>
+                                            </li>
+                                        </ul>
+                                        <a asp-controller="Home" asp-action="Index">← Quay về trang chủ</a>
+                                        <a asp-controller="Cart" asp-action="Checkout">Thanh toán</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</main>
+<style>
+    /* Bọc input + nút cập nhật trên CÙNG MỘT HÀNG  */
+    .cart-qty-wrapper {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px; /* khoảng cách giữa input và nút */
+    }
+
+    /* Không để form tự thêm margin làm lệch layout */
+    .cart-update-form {
+        margin: 0;
+    }
+
+    /* Thu nhỏ ô số lượng cho gọn */
+    .cart-plus-minus-box {
+        width: 60px !important;
+        text-align: center;
+    }
+
+    /* Chống template đẩy dấu +, - xuống dưới */
+    .cart-plus-minus {
+        margin-bottom: 0 !important;
+    }
+</style>
+<script>
+    document.addEventListener("input", function (e) {
+        if (e.target.classList.contains("cart-plus-minus-box")) {
+            var qtyInput = e.target;
+            var row = qtyInput.closest("tr");
+            var price = parseInt(row.querySelector(".product-price").innerText.replace(/\D/g,'')) || 0;
+            var qty = parseInt(qtyInput.value) || 0;
+            var subtotalCell = row.querySelector(".product-subtotal");
+            subtotalCell.innerText = (price * qty).toLocaleString("vi-VN") + " đ";
+        }
+    });
+</script>
+

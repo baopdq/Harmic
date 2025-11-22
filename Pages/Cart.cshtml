@@ -1,0 +1,65 @@
+﻿@page "/cart.html"
+@model Harmic.Pages.CartModel
+@{
+    ViewData["Title"] = "Giỏ hàng";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Giỏ hàng</h2>
+
+    @if (!Model.Items.Any())
+    {
+        <div class="alert alert-info">Giỏ hàng rỗng. <a href="/">Tiếp tục mua hàng</a></div>
+    }
+    else
+    {
+        <form method="post" asp-page-handler="Update">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ảnh</th>
+                        <th>Tên</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < Model.Items.Count; i++)
+                {
+                    var it = Model.Items[i];
+                    <tr>
+                        <td style="width:100px;"><img src="~/assets/images/product/@(it.Image ?? "no-image.jpg")" class="img-fluid" /></td>
+                        <td>@it.Title</td>
+                        <td>@it.Price.ToString("C")</td>
+                        <td style="width:140px;">
+                            <input asp-for="Items[@i].Quantity" class="form-control" type="number" min="1" />
+                        </td>
+                        <td>@(it.Price * it.Quantity).ToString("C")</td>
+                        <td>
+                            <button type="submit" formaction="?handler=Remove&index=@i" class="btn btn-sm btn-danger">Xóa</button>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>Tổng</strong></td>
+                        <td colspan="2"><strong>@Model.Total.ToString("C")</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <button type="submit" formaction="?handler=Clear" class="btn btn-outline-danger ms-2">Xóa giỏ hàng</button>
+                </div>
+                <div>
+                    <a asp-page="/Order" class="btn btn-success">Thanh toán</a>
+                </div>
+            </div>
+        </form>
+    }
+</div>
