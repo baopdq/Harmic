@@ -88,7 +88,7 @@
                                                 </td>
                                                 <td class="cart-product-total">
                                                     <span class="amount">
-                                                        @((item.Price * item.Quantity).ToString("N0")) đ
+                                                        @((item.Price * item.Quantity).ToString("N0"))
                                                     </span>
                                                 </td>
                                             </tr>
@@ -99,7 +99,7 @@
                                             <th>Cart Subtotal</th>
                                             <td>
                                                 <span class="amount">
-                                                    @subtotal.ToString("N0") đ
+                                                    @subtotal.ToString("N0")
                                                 </span>
                                             </td>
                                         </tr>
@@ -108,7 +108,7 @@
                                             <td>
                                                 <strong>
                                                     <span class="amount">
-                                                        @subtotal.ToString("N0") đ
+                                                        @subtotal.ToString("N0")
                                                     </span>
                                                 </strong>
                                             </td>
@@ -140,7 +140,8 @@
                                     </div>
 
                                     <div class="order-button-payment mt-3">
-                                        <input value="Đặt hàng" type="submit" class="btn btn-primary" />
+                                        <input name="payment" value="Thanh Toán (VNPAY)" type="submit" class="btn btn-primary" />
+
                                     </div>
 
                                     <div class="mt-2">

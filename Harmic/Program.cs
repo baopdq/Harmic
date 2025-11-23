@@ -1,6 +1,7 @@
 using Harmic.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Harmic.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HarmicContext>(options =>
@@ -27,6 +28,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/Admin/Login/Denied";
 
     });
+builder.Services.AddSingleton<IVnPayService, VnPayService>();
 var app = builder.Build();
 
 

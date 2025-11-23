@@ -2,7 +2,19 @@
     List<TbProductCategory> productCategories = ViewBag.productCategories;
     List<TbProduct> productNew = ViewBag.productNew;
 }
+@{
+    ViewData["Title"] = "Trang chủ";
+}
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- phần còn lại trang chủ -->
 <!-- Begin Slider Area -->
 <div class="slider-area">
 
